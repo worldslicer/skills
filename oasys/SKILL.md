@@ -229,6 +229,8 @@ full process case: [references/cli.md](references/cli.md).
   pure, and never put `@widget` on the MAP cell itself (dropped on save). `RET MAP $xs &f` /
   `RET REDUCE $xs $xs[0] &f` return the result; inside a formula (`#sum(MAP $xs &f)`) they are a
   parse error: bind first (`LET ys = MAP $xs &f`, then `RET #sum($ys)`).
+- **Lines are not functions in formulas**: `RET $n * solve($n-1)` is a parse error; run a line with
+  `CALL[solve($n - 1)] r` and read `$r`.
 - **No list/object literals inside formulas** (`#len([1,2])` fails). Bind the literal to a
   `LET` first and use `$ref`.
 - **AI cell body is an object** with only `user`, `system`, `output` keys.
