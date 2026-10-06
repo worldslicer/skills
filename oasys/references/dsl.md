@@ -112,6 +112,8 @@ BIF $cond -> line                  jump to `line`; execution continues in order 
 LET ys = MAP $xs &f                f($x) per item
 LET ok = FILTER $xs &isOk          keep items where the line RETs true
 LET sum = REDUCE $xs 0 &add        add($acc, $x); init = literal or expression ($xs[0], $a * 2)
+RET MAP $xs &f                    RET <MAP|FILTER|REDUCE ...> returns the result (parsed as LET _retN + RET $_retN)
+LET n = #sum(MAP $xs &f)           parse error: bind the MAP first (LET ys = MAP ...; LET n = #sum($ys))
 FOREACH $xs &notify                side effects per item
 ```
 

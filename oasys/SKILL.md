@@ -226,7 +226,9 @@ full process case: [references/cli.md](references/cli.md).
 - **Index lists with `$xs[0]`**, not `$xs.0` (that is `null`); `.key` is for objects. Any
   `#name(...)` that is not a builtin is a tool call.
 - **MAP/FILTER/REDUCE**: use a bare `&line` (unique name, helpers in a `_` page), keep that line
-  pure, and never put `@widget` on the MAP cell itself (dropped on save).
+  pure, and never put `@widget` on the MAP cell itself (dropped on save). `RET MAP $xs &f` /
+  `RET REDUCE $xs $xs[0] &f` return the result; inside a formula (`#sum(MAP $xs &f)`) they are a
+  parse error: bind first (`LET ys = MAP $xs &f`, then `RET #sum($ys)`).
 - **No list/object literals inside formulas** (`#len([1,2])` fails). Bind the literal to a
   `LET` first and use `$ref`.
 - **AI cell body is an object** with only `user`, `system`, `output` keys.
