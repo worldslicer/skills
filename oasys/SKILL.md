@@ -236,4 +236,4 @@ full process case: [references/cli.md](references/cli.md).
 - **Data files are hard errors when missing**; list harness files in an `ignore` set
   (`"@hidden.json"`) so the solver cannot read them.
 - **Keys never go in `.os`**: providers read them from workspace credentials or the environment.
-- Use `pnpx` (not `npx`) for Node tooling, e.g. `pnpx skills add woldslice/skills -s oasys`.
+- Use `pnpx` (not `npx`) for Node tooling, e.g. `pnpx skills add worldslicer/skills -s oasys`.

@@ -9,7 +9,7 @@ Agent Skills for [OASys](https://github.com/OverHCV/OASys) — the agentic progr
 ## Install
 
 ```sh
-pnpx skills add woldslice/skills -s oasys
+pnpx skills add worldslicer/skills -s oasys
 ```
 
 The source of truth lives in the OASys repo (`skills/oasys/`); every `.os` example in it is compiled by a test there.
