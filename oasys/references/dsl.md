@@ -111,7 +111,7 @@ RET $value                         return to the caller; with no caller, end the
 BIF $cond -> line                  jump to `line`; execution continues in order after it
 LET ys = MAP $xs &f                f($x) per item
 LET ok = FILTER $xs &isOk          keep items where the line RETs true
-LET sum = REDUCE $xs 0 &add        add($acc, $x)
+LET sum = REDUCE $xs 0 &add        add($acc, $x); init = literal or expression ($xs[0], $a * 2)
 FOREACH $xs &notify                side effects per item
 ```
 

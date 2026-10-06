@@ -90,7 +90,7 @@ CALL[line] / CALL[Page.line($a)] Name / CALL[book.Page.line]  binds the callee's
 CALL[a, b] Both                    fork-join: Both = {a: …, b: …}
 RET $value                         return to caller; at top level it ends the page
 BIF $cond -> line                  branch: jump to line (then continue after it, in order)
-LET ys = MAP $xs &line             also FILTER $xs &line, REDUCE $xs 0 &line, FOREACH $xs &line
+LET ys = MAP $xs &line             also FILTER $xs &line, REDUCE $xs <init> &line (init: literal or expr like $xs[0]), FOREACH $xs &line
 LET a = $xs[0] + $o.key            index lists with [i], objects with .key
 LET r => #readFile(path: "a.md")   tool cell: call one tool directly, no model
 CURL Resp => -X POST https://api.x/y -H 'K: v' -d '{"q": $x}'    $Resp.status, $Resp.body
