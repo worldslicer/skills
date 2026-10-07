@@ -111,7 +111,8 @@ local Ollama, `--jobs` above `OLLAMA_NUM_PARALLEL` gains nothing.
   understand-reason (classify, summarize, analyze, …), plan-decide (plan, schedule, …),
   execute-operate (compute, transform, apply, …), verify-correct (debug, verify, evaluate, …),
   create-orchestrate (compose, implement, build, …). An unknown verb is exit 2.
-- Topologies: `single` (one call), `chain` (stages), `colony` (roles, at least one verifier).
+- Topologies: `single` (one call), `chain` (stages), `colony` (roles, at least one verifier),
+  `verification` (a deterministic check on the input and the answer, one retry with its message).
 
 ### A complete LLM process case
 

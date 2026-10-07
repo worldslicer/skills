@@ -193,7 +193,7 @@ A device becomes a bench case when its entry book carries `@benchmark(...)`:
 | `max_ticks`, `max_ms` | budget; over budget = no verdict |
 | `verdict` | cell read as pass/fail when there is no `metric` (default `passes`) |
 | `process`, `bloom`, `verb`, `task` | LLM process case `pN`; `bloom` ∈ perceive-retrieve, understand-reason, plan-decide, execute-operate, verify-correct, create-orchestrate; `verb` must belong to that column |
-| `topology`, `trials` | `single` / `chain` / `colony`; attempts per input (1–50) |
+| `topology`, `trials` | `single` / `chain` / `colony` / `verification`; attempts per input (1–50) |
 | `epochs` | dynamic case: rounds the agent gets, with `$feedback` between them |
 
 Top-level `metric name { kind, run, read, … }` blocks score the case (`kind`: exact, predicate,
@@ -231,6 +231,7 @@ full process case: [references/cli.md](references/cli.md).
   parse error: bind first (`LET ys = MAP $xs &f`, then `RET #sum($ys)`).
 - **Lines are not functions in formulas**: `RET $n * solve($n-1)` is a parse error; run a line with
   `CALL[solve($n - 1)] r` and read `$r`.
+- **Variables need `$`**: `RET d3 && d5 ? ...` / `LET x = d3 + 1` is a parse error (hint: use `$d3`); text must be quoted.
 - **No list/object literals inside formulas** (`#len([1,2])` fails). Bind the literal to a
   `LET` first and use `$ref`.
 - **AI cell body is an object** with only `user`, `system`, `output` keys.
@@ -241,3 +242,21 @@ full process case: [references/cli.md](references/cli.md).
   (`"@hidden.json"`) so the solver cannot read them.
 - **Keys never go in `.os`**: providers read them from workspace credentials or the environment.
 - Use `pnpx` (not `npx`) for Node tooling, e.g. `pnpx skills add worldslicer/skills -s oasys`.
+
+## Working as an agent in OASys
+
+When you edit a device through the `oasys` kit tools, work in small verified steps:
+
+1. **Read before you edit.** Call `readBook` once and copy `oldStr` from it exactly; never
+   rewrite from memory.
+2. **Check before you write.** Pass your new fragment to `checkSyntax` (`{"source": "..."}`: a line
+   body, statements, or a whole `line name($a) { ... }` block). It returns `ok` or the parse error
+   with line/col in your fragment plus a hint, and never changes the book.
+3. **Make one small edit** with `editBook`. If it fails, re-read and fix that one thing; do not
+   repeat the same call.
+4. **Verify with `runCell`** on the cell you changed and compare the value with what you expect.
+5. **Respond through the output contract**: finish by calling `respond` with the requested shape;
+   no loose text.
+
+Tradeoff: prefer a small verified edit over a large unverified one. It costs more tool calls, but
+a failed large edit costs the whole attempt.

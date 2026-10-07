@@ -164,7 +164,7 @@ agent name {
 }
 ```
 
-Built-in kits: `oasys` (deviceTree, readBook, editBook, runCell, query, listTools), `filesystem`,
+Built-in kits: `oasys` (deviceTree, readBook, editBook, checkSyntax, runCell, query, listTools), `filesystem`,
 `shell`, `web`, `memory` (remember, recall, saveState, loadState, …), `telegram`. List them with
 `oasys tool list [--kit k]`. A tool in `ask` mode is denied in headless runs.
 
